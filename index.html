@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce EDA Project Dashboard</title>
+ 
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+       
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-chart-pie brand-icon"></i>
+                <h2>EDA Studio</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <button class="nav-item active" data-tab="overview">
+                    <i class="fa-solid fa-house-chimney"></i> Overview
+                </button>
+                <button class="nav-item" data-tab="distributions">
+                    <i class="fa-solid fa-chart-simple"></i> Distributions
+                </button>
+                <button class="nav-item" data-tab="breakdowns">
+                    <i class="fa-solid fa-shapes"></i> Breakdowns
+                </button>
+                <button class="nav-item" data-tab="correlations">
+                    <i class="fa-solid fa-circle-nodes"></i> Correlations
+                </button>
+                <button class="nav-item" data-tab="data-viewer">
+                    <i class="fa-solid fa-table"></i> Data Viewer
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Status: <span class="status-badge">Cleaned</span></p>
+                <p class="timestamp-label" id="analysis-time">Generated: N/A</p>
+            </div>
+        </aside>
+     
+        <main class="main-content">
+            <header class="app-header">
+                <div class="header-left">
+                    <h1>E-Commerce Customer Analysis</h1>
+                    <p class="subtitle">Exploratory Data Analysis (EDA) Interactive Dashboard Report</p>
+                </div>
+                <div class="header-right">
+                 
+                    <div class="filter-group">
+                        <label for="membership-filter"><i class="fa-solid fa-filter"></i> Tier:</label>
+                        <select id="membership-filter" class="filter-select">
+                            <option value="ALL">All Tiers</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Premium">Premium</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+            <section id="tab-overview" class="tab-pane active">
+             
+                <div class="kpi-grid">
+                    <div class="kpi-card text-gradient-1">
+                        <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Total Customers</span>
+                            <h3 class="kpi-val" id="kpi-customers">0</h3>
+                            <span class="kpi-subtext">Active & Churned Cohort</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card text-gradient-2">
+                        <div class="kpi-icon"><i class="fa-solid fa-dollar-sign"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Total Revenue</span>
+                            <h3 class="kpi-val" id="kpi-revenue">$0</h3>
+                            <span class="kpi-subtext">Capped Total Spending</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card text-gradient-3">
+                        <div class="kpi-icon"><i class="fa-solid fa-wallet"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Average Ticket</span>
+                            <h3 class="kpi-val" id="kpi-spend">$0</h3>
+                            <span class="kpi-subtext">Avg Spend per Customer</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card text-gradient-4">
+                        <div class="kpi-icon"><i class="fa-solid fa-user-minus"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Churn Rate</span>
+                            <h3 class="kpi-val" id="kpi-churn">0%</h3>
+                            <span class="kpi-subtext">Overall Customer Attrition</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card text-gradient-5">
+                        <div class="kpi-icon"><i class="fa-solid fa-star"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Avg Satisfaction</span>
+                            <h3 class="kpi-val" id="kpi-rating">0.0 / 5</h3>
+                            <span class="kpi-subtext">Average Rating Index</span>
+                        </div>
+                    </div>
+                </div>
+         
+                <div class="card summary-box">
+                    <h3><i class="fa-solid fa-lightbulb text-amber"></i> Project Context & Executive Summary</h3>
+                    <p>
+                        This project performs a comprehensive Exploratory Data Analysis (EDA) on an e-commerce customer behavior dataset. 
+                        The raw data was programmatically synthesized to introduce missing records (5% age gaps), mixed date formats, 
+                        and high-variance purchase outliers. We processed this dataset to build clean pipelines and uncover correlation factors driving spending and retention.
+                    </p>
+                    <div class="summary-bullets">
+                        <div class="bullet-item">
+                            <span class="bullet-icon bg-indigo"><i class="fa-solid fa-check"></i></span>
+                            <p><strong>Missing Data Resolution:</strong> Imputed missing ages using median age calculation.</p>
+                        </div>
+                        <div class="bullet-item">
+                            <span class="bullet-icon bg-pink"><i class="fa-solid fa-check"></i></span>
+                            <p><strong>Outlier Strategy:</strong> Applied the IQR rule to cap extreme high spends, preventing skewed averages while retaining data rows.</p>
+                        </div>
+                        <div class="bullet-item">
+                            <span class="bullet-icon bg-teal"><i class="fa-solid fa-check"></i></span>
+                            <p><strong>Key Driver:</strong> Customer satisfaction rating represents the single largest correlative predictor of churn.</p>
+                        </div>
+                    </div>
+                </div>
+           
+                <div class="gallery-section">
+                    <h2><i class="fa-solid fa-images"></i> Python Static Plot Gallery</h2>
+                    <p class="section-subtitle">Visualizations generated using matplotlib and seaborn during pipeline execution</p>
+                    <div class="gallery-grid">
+                        <div class="gallery-card">
+                            <div class="gallery-img-container">
+                                <img src="../plots/spend_distribution.png" alt="Spend Distribution" onerror="this.src='https://placehold.co/600x400?text=Plot+Not+Found'">
+                            </div>
+                            <h4>Spend Distribution (Raw vs Cleaned)</h4>
+                            <p>Demonstrates IQR outlier capping effect on distributions.</p>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-img-container">
+                                <img src="../plots/spend_vs_age.png" alt="Spend vs Age" onerror="this.src='https://placehold.co/600x400?text=Plot+Not+Found'">
+                            </div>
+                            <h4>Spend vs. Age by Membership</h4>
+                            <p>Highlights correlation trends across membership tiers.</p>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-img-container">
+                                <img src="../plots/churn_vs_satisfaction.png" alt="Churn vs Satisfaction" onerror="this.src='https://placehold.co/600x400?text=Plot+Not+Found'">
+                            </div>
+                            <h4>Satisfaction vs. Churn Status</h4>
+                            <p>Boxplots illustrating low rating clusters for churned segments.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+     
+            <section id="tab-distributions" class="tab-pane">
+                <div class="grid-2col">
+                    <div class="card chart-card">
+                        <h3>Customer Age Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="ageDistributionChart"></canvas>
+                        </div>
+                        <p class="chart-caption">Binned customer age distribution. Peak density sits between 35 and 50 years.</p>
+                    </div>
+                    <div class="card chart-card">
+                        <h3>Total Spend Distribution (Cleaned)</h3>
+                        <div class="chart-container">
+                            <canvas id="spendDistributionChart"></canvas>
+                        </div>
+                        <p class="chart-caption">Shows transaction value distribution. Multi-modal distribution reveals tiered customer clusters.</p>
+                    </div>
+                </div>
+            </section>
+         
+            <section id="tab-breakdowns" class="tab-pane">
+                <div class="grid-3col">
+                    <div class="card chart-card">
+                        <h3>Avg Spend by Tier</h3>
+                        <div class="chart-container">
+                            <canvas id="tierSpendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card chart-card">
+                        <h3>Preferred Categories</h3>
+                        <div class="chart-container">
+                            <canvas id="categoryDistributionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card chart-card">
+                        <h3>Churn Rate by Region</h3>
+                        <div class="chart-container">
+                            <canvas id="regionChurnChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card breakdown-table-card">
+                    <h3>Breakdown Matrices</h3>
+                    <div class="table-container">
+                        <table class="data-table" id="breakdown-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Dimension</th>
+                                    <th>Segment</th>
+                                    <th>Volume (Count)</th>
+                                    <th>Average Cleaned Spend</th>
+                                    <th>Attrition (Churn Rate)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+         
+            <section id="tab-correlations" class="tab-pane">
+                <div class="grid-2col">
+                    <div class="card correlation-info-card">
+                        <h3>Understanding Statistical Relationships</h3>
+                        <p>We compute <strong>Pearson Correlation Coefficients ($r$)</strong> to evaluate strength and direction of linear associations:</p>
+                        <div class="correlation-legend">
+                            <div class="legend-item"><span class="legend-dot positive"></span> <span><strong>Positive (0.5 to 1.0):</strong> Strong proportional relationship (e.g., Spend & Quantity)</span></div>
+                            <div class="legend-item"><span class="legend-dot neutral"></span> <span><strong>Neutral (-0.2 to 0.2):</strong> No linear relation (e.g., Discounts & Spend)</span></div>
+                            <div class="legend-item"><span class="legend-dot negative"></span> <span><strong>Negative (-1.0 to -0.5):</strong> Inverse relationship (e.g., Satisfaction & Churn)</span></div>
+                        </div>
+                        <div class="insight-highlights-box">
+                            <h4>Key Structural Insights</h4>
+                            <ul>
+                                <li><strong>Transactional Correlation:</strong> `Total_Spend_Cleaned` is highly correlated with `Items_Purchased` ($r = 0.90$).</li>
+                                <li><strong>Churn Correlation:</strong> Customer churn status shows a prominent negative correlation with `Average_Rating` ($r \approx -0.56$). Low satisfaction drives attrition.</li>
+                                <li><strong>Age Effect:</strong> Age shows a mild positive correlation with total spending ($r \approx 0.35$). Older consumers buy more.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card chart-card">
+                        <h3>Pearson Correlation Matrix Grid</h3>
+                        <div id="correlation-matrix-grid" class="matrix-grid">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+            <section id="tab-data-viewer" class="tab-pane">
+                <div class="card table-card-full">
+                    <div class="table-header">
+                        <h3>Dataset Sample Preview (Cleaned)</h3>
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="table-search" placeholder="Search customer records...">
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="sample-data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Location</th>
+                                    <th>Membership</th>
+                                    <th>Spend ($)</th>
+                                    <th>Rating</th>
+                                    <th>Frequency</th>
+                                    <th>Category</th>
+                                    <th>Last Purchase</th>
+                                    <th>Churn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                           
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="data_summary.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
